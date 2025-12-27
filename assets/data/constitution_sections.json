@@ -1,0 +1,20 @@
+[
+  {
+    "id": "preamble",
+    "title": "Preamble",
+    "summary": "Sets out the values and purpose of the constitution in brief.",
+    "text": "This is a short, representative preamble summary. Replace with the authoritative text if you have the right to include the full wording."
+  },
+  {
+    "id": "section1",
+    "title": "Founding Provisions",
+    "summary": "Outlines the Republic, sovereignty, and supremacy of the constitution.",
+    "text": "Brief summary of founding provisions. Use the original constitutional text where permitted."
+  },
+  {
+    "id": "section2",
+    "title": "Bill of Rights",
+    "summary": "Guarantees fundamental rights and freedoms for everyone in the jurisdiction.",
+    "text": "Summaries of rights like equality, human dignity, freedom of expression, and privacy. For full legal use, reference the official constitution text."
+  }
+]
