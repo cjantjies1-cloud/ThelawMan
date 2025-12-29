@@ -10,12 +10,21 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  flutter_native_splash: ^2.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/data/constitution_sections.json
+    - assets/images/Legal Consultancy Logo with South African Flag.png
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/Legal Consultancy Logo with South African Flag.png
+  color_dark: "#000000"
+  image_dark: assets/images/Legal Consultancy Logo with South African Flag.png
