@@ -12,9 +12,11 @@ The app is configured with a keystore for signing releases:
 
 **Keystore Details:**
 
-- Location: `android/the_lawman_keystore.jks`
-- Key Alias: `the_lawman_key`
-- Passwords: `theLawman123!` (both store and key password)
+- Default location: `android/release-keystore.jks` (override with `KEYSTORE_PATH`)
+- Provide credentials via environment variables or `gradle.properties`:
+  - `KEY_ALIAS`
+  - `KEY_PASSWORD`
+  - `STORE_PASSWORD`
 
 ## Building the AAB File
 
@@ -71,6 +73,7 @@ build/app/outputs/bundle/release/app-release.aab
 ### Error: "keystore file not found"
 
 Ensure the keystore path is correct and the file exists.
+If the keystore is missing, the build will fall back to the debug keystore so you can still produce an AAB. Replace it with your release keystore before publishing to Play Store.
 
 ### Error: "FAILURE: Build failed"
 

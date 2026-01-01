@@ -5,6 +5,17 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+fun Project.signingCredential(name: String): String? =
+    System.getenv(name) ?: findProperty(name)?.toString()
+
+fun Project.resolveKeystorePath(defaultPath: String, legacyPath: String): String =
+    System.getenv("KEYSTORE_PATH")
+        ?: findProperty("KEYSTORE_PATH")?.toString()
+        ?: legacyPath.takeIf { file(it).exists() }
+        ?: defaultPath
+
+fun credentialsMissing(vararg values: String?): Boolean = values.any { it.isNullOrBlank() }
+
 android {
     namespace = "com.example.the_lawman"
     compileSdk = flutter.compileSdkVersion
@@ -31,11 +42,32 @@ android {
     }
 
     signingConfigs {
+        maybeCreate("debug")
         create("release") {
-            keyAlias = System.getenv("KEY_ALIAS") ?: "the_lawman_key"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: "theLawman123!"
-            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "${rootProject.projectDir}/the_lawman_keystore.jks")
-            storePassword = System.getenv("STORE_PASSWORD") ?: "theLawman123!"
+            val defaultKeystorePath = "${rootProject.projectDir}/release-keystore.jks"
+            val legacyKeystorePath = "${rootProject.projectDir}/the_lawman_keystore.jks"
+            val keystorePath = project.resolveKeystorePath(defaultKeystorePath, legacyKeystorePath)
+            val keystoreFile = file(keystorePath)
+
+            if (keystoreFile.exists()) {
+                val keyAliasProp = project.signingCredential("KEY_ALIAS")
+                val keyPasswordProp = project.signingCredential("KEY_PASSWORD")
+                val storePasswordProp = project.signingCredential("STORE_PASSWORD")
+
+                if (credentialsMissing(keyAliasProp, keyPasswordProp, storePasswordProp)) {
+                    throw GradleException("Release keystore found at $keystorePath but signing credentials are missing. Please provide KEY_ALIAS, KEY_PASSWORD, and STORE_PASSWORD.")
+                }
+
+                keyAlias = keyAliasProp
+                keyPassword = keyPasswordProp
+                storeFile = keystoreFile
+                storePassword = storePasswordProp
+            } else {
+                val debugConfig = findByName("debug")
+                    ?: throw GradleException("Release keystore not found and debug signing config unavailable. Provide a release keystore to build the bundle.")
+                initWith(debugConfig)
+                logger.warn("Release keystore not found at $keystorePath. Falling back to debug signing for AAB generation.")
+            }
         }
     }
 
