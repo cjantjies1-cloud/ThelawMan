@@ -1,20 +1,30 @@
-{
-  "sections": [
-    {
-      "title": "Section 1: Fundamental Rights",
-      "description": "This section outlines the fundamental rights and freedoms of all citizens."
-    },
-    {
-      "title": "Section 2: The Executive",
-      "description": "This section defines the powers and responsibilities of the executive branch."
-    },
-    {
-      "title": "Section 3: The Legislature",
-      "description": "This section establishes the structure and powers of the legislative branch."
-    },
-    {
-      "title": "Section 4: The Judiciary",
-      "description": "This section creates the judicial branch and outlines its jurisdiction."
-    }
-  ]
-}
+[
+  {
+    "section": "1",
+    "official_summary": "The Republic of South Africa is one, sovereign, democratic state founded on the values of human dignity, the achievement of equality and the advancement of human rights and freedoms.",
+    "plain_language": "South Africa is a single country with one government. It is a democracy where everyone has equal rights and human dignity is respected.",
+    "common_situations": ["When applying for citizenship", "Understanding South Africa's founding values", "Learning about national identity"],
+    "keywords": ["sovereignty", "democracy", "human dignity", "equality", "rights"]
+  },
+  {
+    "section": "7",
+    "official_summary": "The Bill of Rights is a cornerstone of democracy in South Africa. It enshrines the rights of all people in the country and affirms the democratic values of human dignity, equality and freedom.",
+    "plain_language": "The Bill of Rights protects everyone's freedoms and rights. It includes freedom of speech, religion, and assembly, protection from discrimination, and many other fundamental rights.",
+    "common_situations": ["Experiencing discrimination", "Exercising freedom of speech", "Seeking justice for violations", "Understanding your basic rights"],
+    "keywords": ["Bill of Rights", "freedom", "dignity", "protection", "discrimination"]
+  },
+  {
+    "section": "12",
+    "official_summary": "Everyone has the right to freedom and security of the person, which includes the right not to be tortured in any way and not to be treated or punished in a cruel, inhuman or degrading way.",
+    "plain_language": "You have the right to be safe and free from torture, cruel treatment, or degrading punishment. Your body and mind should be respected and protected.",
+    "common_situations": ["Police interactions", "Detention or arrest", "Prison conditions", "Medical treatment"],
+    "keywords": ["safety", "torture", "cruel treatment", "dignity", "detention"]
+  },
+  {
+    "section": "16",
+    "official_summary": "Everyone has the right to freedom of conscience, religion, thought, belief, opinion and expression, including freedom of the press and other media of communication.",
+    "plain_language": "You can believe what you want, practice your religion, think for yourself, and express your opinions freely. The media also has freedom to report and communicate.",
+    "common_situations": ["Religious practices", "Speaking your opinion", "Journalism", "Peaceful protest", "Social media posts"],
+    "keywords": ["conscience", "religion", "expression", "media", "opinion"]
+  }
+]
