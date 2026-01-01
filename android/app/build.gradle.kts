@@ -32,10 +32,18 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = System.getenv("KEY_ALIAS") ?: "the_lawman_key"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: "theLawman123!"
-            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "${rootProject.projectDir}/the_lawman_keystore.jks")
-            storePassword = System.getenv("STORE_PASSWORD") ?: "theLawman123!"
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootProject.projectDir}/the_lawman_keystore.jks"
+            val keystoreFile = file(keystorePath)
+
+            if (keystoreFile.exists()) {
+                keyAlias = System.getenv("KEY_ALIAS") ?: "the_lawman_key"
+                keyPassword = System.getenv("KEY_PASSWORD") ?: "theLawman123!"
+                storeFile = keystoreFile
+                storePassword = System.getenv("STORE_PASSWORD") ?: "theLawman123!"
+            } else {
+                initWith(getByName("debug"))
+                println("Release keystore not found at $keystorePath. Falling back to debug signing for AAB generation.")
+            }
         }
     }
 

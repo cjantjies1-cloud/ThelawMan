@@ -71,6 +71,7 @@ build/app/outputs/bundle/release/app-release.aab
 ### Error: "keystore file not found"
 
 Ensure the keystore path is correct and the file exists.
+If the keystore is missing, the build will fall back to the debug keystore so you can still produce an AAB. Replace it with your release keystore before publishing to Play Store.
 
 ### Error: "FAILURE: Build failed"
 
