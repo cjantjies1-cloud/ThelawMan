@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "gfrnr.docked-android-ios-emulator"
+        "gfrnr.docked-android-ios-emulator",
+        "flutterflow.flutterflow-custom-code-editor",
+        "dotjoshjohnson.xml"
     ]
 }
