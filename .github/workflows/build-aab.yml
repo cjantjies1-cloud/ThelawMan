@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,6 +19,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android Licenses
+        run: yes | sdkmanager --licenses
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -32,22 +37,27 @@ jobs:
           cd app
           flutter pub get
 
+      - name: Decode keystore from secret
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > app/android/the_lawman_keystore.jks
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+
       - name: Build AAB
         run: |
+          set -e
           cd app
+          echo "Keystore path: $KEYSTORE_PATH"
+          echo "Key alias: $KEY_ALIAS"
+          echo "Store password set: ${STORE_PASSWORD:+yes}"
+          echo "Key password set: ${KEY_PASSWORD:+yes}"
+          flutter doctor -v
           flutter build appbundle --release --verbose
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/app/android/the_lawman_keystore.jks
-          KEY_ALIAS: the_lawman_key
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-
-      - name: Upload AAB to artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-aab
-          path: app/build/app/outputs/bundle/release/app-release.aab
-          retention-days: 30
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

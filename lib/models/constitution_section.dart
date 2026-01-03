@@ -1,26 +1,28 @@
 class ConstitutionSection {
-  final String section;
-  final String officialSummary;
-  final String plainLanguage;
-  final List<String> commonSituations;
-  final List<String> keywords;
+  final String title;
+  final String constitutionText;
+  final String explanation;
+  final String practicalExample;
 
   ConstitutionSection({
-    required this.section,
-    required this.officialSummary,
-    required this.plainLanguage,
-    required this.commonSituations,
-    required this.keywords,
+    required this.title,
+    required this.constitutionText,
+    required this.explanation,
+    required this.practicalExample,
   });
 
   factory ConstitutionSection.fromJson(Map<String, dynamic> json) {
+    final sectionNum = json['section']?.toString() ?? '';
+    final official = json['official_summary'] ?? '';
+    final plain = json['plain_language'] ?? '';
+    final common = (json['common_situations'] as List<dynamic>?)?.cast<String>() ?? [];
+
     return ConstitutionSection(
-      section: json['section'],
-      officialSummary: json['official_summary'],
-      plainLanguage: json['plain_language'],
-      commonSituations:
-          List<String>.from(json['common_situations'] ?? []),
-      keywords: List<String>.from(json['keywords'] ?? []),
+      title: sectionNum.isNotEmpty ? 'Section $sectionNum' : (json['title'] ?? ''),
+      constitutionText: official,
+      explanation: plain,
+      practicalExample: common.isNotEmpty ? common.first : '',
     );
   }
 }
+

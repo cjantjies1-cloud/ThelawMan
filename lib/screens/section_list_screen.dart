@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/constitution_section.dart';
-import '../services/content_service.dart';
+import '../data/constitution_sections.dart';
 import 'section_detail_screen.dart';
+import '../widgets/faded_logo_background.dart';
+import '../models/constitution_section.dart';
 
 class SectionListScreen extends StatefulWidget {
   const SectionListScreen({super.key});
@@ -11,81 +12,64 @@ class SectionListScreen extends StatefulWidget {
 }
 
 class _SectionListScreenState extends State<SectionListScreen> {
-  List<ConstitutionSection> allSections = [];
-  List<ConstitutionSection> filteredSections = [];
+  String query = '';
 
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  Future<void> loadData() async {
-    final data = await ContentService.loadSections();
-    setState(() {
-      allSections = data;
-      filteredSections = data;
-    });
-  }
-
-  void filterSections(String query) {
-    final q = query.toLowerCase();
-    setState(() {
-      filteredSections = allSections.where((s) {
-        return s.section.toLowerCase().contains(q) ||
-            s.plainLanguage.toLowerCase().contains(q) ||
-            s.keywords.any((k) => k.toLowerCase().contains(q));
-      }).toList();
-    });
+  List<ConstitutionSection> _toModelList() {
+    return constitutionSections.map((m) {
+      return ConstitutionSection(
+        title: m['title']?.toString() ?? '',
+        constitutionText: m['content']?.toString() ?? '',
+        explanation: m['content']?.toString() ?? '',
+        practicalExample: '',
+      );
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final all = _toModelList();
+    final filtered = all
+        .where((s) => s.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Learn Your Rights')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search rights or keywords',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+      appBar: AppBar(title: const Text('Constitution Sections')),
+      body: FadedLogoBackground(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Search sections',
+                  prefixIcon: Icon(Icons.search),
                 ),
+                onChanged: (value) {
+                  setState(() => query = value);
+                },
               ),
-              onChanged: filterSections,
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredSections.length,
-              itemBuilder: (context, index) {
-                final section = filteredSections[index];
-                return ListTile(
-                  title: Text(section.section),
-                  subtitle: Text(
-                    section.plainLanguage,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  trailing:
-                      const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            SectionDetailScreen(section: section),
-                      ),
-                    );
-                  },
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                itemCount: filtered.length,
+                itemBuilder: (_, index) {
+                  final section = filtered[index];
+                  return ListTile(
+                    title: Text(section.title),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => SectionDetailScreen(section: section),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

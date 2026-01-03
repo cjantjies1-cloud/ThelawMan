@@ -17,7 +17,7 @@ fun Project.resolveKeystorePath(defaultPath: String, legacyPath: String): String
 fun credentialsMissing(vararg values: String?): Boolean = values.any { it.isNullOrBlank() }
 
 android {
-    namespace = "com.example.the_lawman"
+    namespace = "com.cjantjies1.lawman"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -32,7 +32,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.Mogul.the_Lawman"
+        applicationId = "com.cjantjies1.lawman"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

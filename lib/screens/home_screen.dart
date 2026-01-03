@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'section_list_screen.dart';
+import 'privacy_policy_screen.dart';
+import 'quiz_screen.dart';
+import '../widgets/faded_logo_background.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,85 +10,47 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('The LawMan'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Know Your Rights',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Learn the South African Constitution in simple language.',
-            ),
-            const SizedBox(height: 24),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                children: [
-                  _HomeCard(
-                    icon: Icons.menu_book,
-                    title: 'Learn Your Rights',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const SectionListScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final VoidCallback onTap;
-
-  const _HomeCard({
-    required this.icon,
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.shade100,
-        ),
+      appBar: AppBar(title: const Text('The LawMan')),
+      body: FadedLogoBackground(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: const Color(0xFF0B3C5D)),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+            const SizedBox(height: 16),
+            const Text(
+              'Know Your Rights',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              child: const Text('Read the Constitution'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const SectionListScreen()),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              child: const Text('Test Your Knowledge'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const QuizScreen()),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+
+            TextButton(
+              child: const Text('Privacy Policy'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen()),
+                );
+              },
             ),
           ],
         ),
