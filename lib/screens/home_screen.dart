@@ -26,8 +26,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => const SectionListScreen()),
+                  MaterialPageRoute(builder: (_) => const SectionListScreen()),
                 );
               },
             ),
@@ -42,13 +41,13 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-
             TextButton(
               child: const Text('Privacy Policy'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen()),
+                  MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicyScreen()),
                 );
               },
             ),
